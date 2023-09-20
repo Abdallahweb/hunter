@@ -1,8 +1,181 @@
-<html lang=en><meta charset=UTF-8><meta content="IE=edge"http-equiv=X-UA-Compatible><link href=./hunter.gif rel=icon><title>Hunter Game</title><style>body{background-size: cover;background-image:url(back.jpg);width:10000000000000000000000000000000px;height:100vh;overflow:hidden}.hunter{width:300px;height:300px;position:fixed;left:10px;top:100px;z-index:10000}.jump{width:200px;height:200px;position:fixed;left:10px;top:20px;z-index:10000}.go{width:200px;height:40px;position:fixed;left:50%;top:500px;margin-left:-100px;border-radius:40px;border:1px solid transparent;cursor:pointer;z-index:10000;background-color:rgba(0,0,0,.5);backdrop-filter:blur(50px);color:#fff}.score{background-color:transparent;color:#b6441b;font-size:30px;border:none;font-weight:700;text-shadow:-2px -1px gold}.dangerous{position:absolute}</style><body onload=startgame()><div style=text-align:center;position:fixed;left:50%;margin-left:-500px;width:1000px><br>🥇<br><br><button class=score id=score></button></div><div class=divdangerous style=width:250px;height:200px></div><div class=hunter id=hunter><img src=./hunter.gif style=width:100%;height:100%></div><button class=go id=go>Click Space To Jump</button> <button class=go id=reload onclick=reload() style=display:none;font-size:17px;font-weight:700>Play Again</button> <img src=./over.jpg style=position:fixed;top:120px;left:50%;width:500px;height:350px;margin-left:-250px;border-radius:100px;display:none id=over><script src=./query.js></script>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="icon" href="./hunter.gif">
+        <title>Hunter Game</title>
+    </head>
+    <style>
 
-<script>
-function startgame(){$("body").append(' <img src="./lion.gif"  class="dangerous">');var m=$(window).scrollLeft()+3000;$(".dangerous").css({"left":m})}
-var x=20;function start(){x+=10;$(window).scrollLeft(x);$("#score").html("Your Score : "+x)}
-const startscroll=setInterval(start,10);const startrun=setInterval(run,10);function run(){var dangerous=document.getElementsByClassName('dangerous');var scorevalue=$(window).scrollLeft();const text=[];for(let i=0;i<dangerous.length;i++){text.push(dangerous[i].style.left);if(text[i]==scorevalue+"px"&&$("#hunter").hasClass("jump")==!1){$(window).scrollLeft(length);$("#hunter").animate({"width":"2px","left":"-2px"})
-clearInterval(startscroll);clearInterval(startrun);$("#score").html("Your Score : "+scorevalue);$("#over").fadeIn(2000);$("#go").fadeOut();$("#reload").fadeIn(2000)}}}$("#go").click(function(){$("#hunter").addClass("jump")}),$("#go").mouseleave(function(){$("#hunter").removeClass("jump"),startgame()})</script><script>function reload(){location.reload()}window.onkeydown=function(o){32==o.keyCode&&$("#hunter").addClass("jump")},window.onkeyup=function(o){32==o.keyCode&&(startgame(),$("#hunter").removeClass("jump"))}
-</script></body>
+body{
+background-image:url(./forest.gif);
+width:10000000000000000000000000000000px;
+height:100vh;
+overflow:hidden;
+background-attachment: fixed;
+background-size: cover;
+background-position: center;
+
+}
+
+.hunter{
+width:300px;height:300px;position:fixed;left:10px;top:100px;
+z-index:10000;
+
+}
+
+.jump{
+width:200px;height:200px;position:fixed;left:10px;top:20px;
+z-index:10000;
+
+}
+.go {
+width:200px;height:40px;position:fixed;left:50%;top:500px;margin-left:-100px;border-radius: 40px;
+border:1px solid transparent;
+cursor:pointer;
+z-index:10000;
+background-color: rgba(0, 0, 0, 0.5);
+backdrop-filter: blur(50px);
+color:#fff
+}
+
+.score{
+background-color: transparent;
+color:rgb(182, 68, 27);
+font-size: 30px;
+border:none;
+font-weight: bold;
+text-shadow: -2px -1px gold
+
+}
+
+
+.dangerous{
+position:absolute;
+}
+    </style>
+    <body onload="startgame()">
+        <div style="text-align:center;position:fixed;left:50%;margin-left:-500px;width:1000px">
+            <br>
+            &#129351;
+            <br>
+            <br>
+            <button class="score" id="score"></button>
+        </div>
+        <div style="width:250px;height:200px;" class="divdangerous"></div>
+        <div class="hunter" id="hunter">
+            <img src="./hunter.gif" style="width:100%;height:100%">
+        </div>
+        <button class="go" id="go">Click Space To Jump</button>
+        <button
+            class="go"
+            onclick="reload()"
+            id="reload"
+            style="display:none;font-size:17px;font-weight:bold"
+        >Play Again</button>
+        <img src="./over.jpg" style="position:fixed;top:120px;left:50%;width:500px;height:350px;margin-left:-250px;border-radius:100px;display:none" id="over">
+        <script src="./query.js"></script>
+        <script>
+
+function startgame(){
+$("body").append(' <img src="./lion.gif"  class="dangerous">');
+var m = $(window).scrollLeft() + 3000;
+$(".dangerous").css({
+"left" : m 
+})
+}
+
+var x = 20 ;
+
+
+
+function start(){
+    
+x += 10;
+
+$(window).scrollLeft(x);
+$("#score").html("Your Score : " + x);
+
+
+}
+
+const startscroll = setInterval(start, 10);
+const startrun = setInterval(run, 10);
+
+
+
+
+function run(){
+
+
+
+var dangerous = document.getElementsByClassName('dangerous');
+
+
+var scorevalue = $(window).scrollLeft();
+
+const text = [];
+
+for (let i = 0; i < dangerous.length; i++) {
+text.push(dangerous[i].style.left);
+if(text[i] == scorevalue+"px" &&  $("#hunter").hasClass("jump") == false){
+$(window).scrollLeft(length);
+
+$("#hunter").animate({
+"width" : "2px",
+"left" : "-2px"
+
+})
+clearInterval(startscroll);
+clearInterval(startrun);
+$("#score").html("Your Score : " + scorevalue);
+
+$("#over").fadeIn(2000);
+$("#go").fadeOut();
+$("#reload").fadeIn(2000);
+
+
+
+}}}
+        </script>
+        <script>
+
+
+$("#go").click(function(){
+
+$("#hunter").addClass("jump");
+
+})
+
+$("#go").mouseleave(function(){
+$("#hunter").removeClass("jump");
+startgame()
+
+})
+        </script>
+        <script>
+window.onkeydown = function(e) { 
+
+if(e.keyCode == 32){
+$("#hunter").addClass("jump")
+}
+};
+
+window.onkeyup = function(e) { 
+
+if(e.keyCode == 32){
+$("#hunter").removeClass("jump"); 
+startgame();
+
+
+}
+};
+
+function reload(){
+    location.reload();
+
+}
+        </script>
+    </body>
+</html>
