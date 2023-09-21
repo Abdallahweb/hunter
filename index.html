@@ -20,7 +20,7 @@ background-position: center;
 }
 
 .hunter{
-width:300px;height:300px;position:fixed;left:10px;top:100px;
+width:300px;height:300px;position:fixed;left:10px;bottom:20px;
 z-index:10000;
 
 }
@@ -31,6 +31,16 @@ z-index:10000;
 
 }
 .go {
+width:200px;height:40px;position:fixed;left:50%;top:150px;margin-left:-100px;border-radius: 40px;
+border:1px solid transparent;
+cursor:pointer;
+z-index:10000;
+background-color: rgba(0, 0, 0, 0.5);
+backdrop-filter: blur(50px);
+color:#fff
+}
+
+.again {
 width:200px;height:40px;position:fixed;left:50%;top:500px;margin-left:-100px;border-radius: 40px;
 border:1px solid transparent;
 cursor:pointer;
@@ -39,6 +49,7 @@ background-color: rgba(0, 0, 0, 0.5);
 backdrop-filter: blur(50px);
 color:#fff
 }
+
 
 .score{
 background-color: transparent;
@@ -69,7 +80,7 @@ position:absolute;
         </div>
         <button class="go" id="go">Click Space To Jump</button>
         <button
-            class="go"
+            class="again"
             onclick="reload()"
             id="reload"
             style="display:none;font-size:17px;font-weight:bold"
@@ -82,7 +93,8 @@ function startgame(){
 $("body").append(' <img src="./lion.gif"  class="dangerous">');
 var m = $(window).scrollLeft() + 3000;
 $(".dangerous").css({
-"left" : m 
+"left" : m ,
+"bottom" : "20px"
 })
 }
 
