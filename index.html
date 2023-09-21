@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <link rel="icon" href="./hunter.gif">
@@ -21,13 +20,12 @@ background-position: center;
 }
 
 .hunter{
-width:300px;height:300px;position:fixed;left:10px;bottom:20px;
-z-index:10000;
+position:fixed;left:10px;bottom:20px;
 
 }
 
 .jump{
-width:200px;height:200px;position:fixed;left:10px;bottom:220px;
+width:200px;height:200px;position:fixed;left:10px;top:20px;
 z-index:10000;
 
 }
@@ -75,9 +73,8 @@ position:absolute;
             <br>
             <button class="score" id="score"></button>
         </div>
-        <!-- <div style="width:250px;height:200px;" class="divdangerous"></div> -->
-        <div class="hunter" id="hunter">
-            <img src="./hunter.gif" style="width:100%;height:100%">
+        <div class="hunter">
+            <img src="./hunter.gif" id="hunter">
         </div>
         <button class="go" id="go">Click Space To Jump</button>
         <button
