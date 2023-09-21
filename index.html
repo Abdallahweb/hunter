@@ -20,7 +20,7 @@ background-position: center;
 }
 
 .hunter{
-position:fixed;left:10px;bottom:20px;
+position:fixed;left:10px;top:100px;
 
 }
 
@@ -63,6 +63,7 @@ text-shadow: -2px -1px gold
 
 .dangerous{
 position:absolute;
+top:220px
 }
     </style>
     <body onload="startgame()">
@@ -92,7 +93,6 @@ $("body").append(' <img src="./lion.gif"  class="dangerous">');
 var m = $(window).scrollLeft() + 3000;
 $(".dangerous").css({
 "left" : m ,
-"bottom" : "20px"
 })
 }
 
