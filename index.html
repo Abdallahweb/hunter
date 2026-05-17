@@ -111,7 +111,7 @@
 
 <!-- top info -->
 <div id="top-info">
-    <button class="score" id="score">Your Score: 10</button>
+    <button class="score" id="score">Your Score: 0</button>
 </div>
 
 <!-- hunter -->
@@ -127,10 +127,12 @@
 <script src="./query.js"></script>
 
 <script>
+
 /* =====================
    GAME VARIABLES
 ===================== */
 var score = 10;
+var FinalScore = 0;
 var scrollTimer, runTimer;
 
 /* =====================
@@ -140,6 +142,7 @@ function startGame() {
     jump();
     stopJump();
     createEnemy();
+
 }
 
 /* =====================
@@ -149,6 +152,9 @@ function createEnemy() {
     $("body").append('<img src="./lion.gif" class="dangerous">');
     var enemyPos = $(window).scrollLeft() + 3000;
     $(".dangerous").last().css({ left: enemyPos });
+if (FinalScore >= 0) {
+        $("#score").html("Your Score : " + FinalScore++);
+}
 }
 
 /* =====================
@@ -157,7 +163,6 @@ function createEnemy() {
 function updateScroll() {
     score += 10;
     $(window).scrollLeft(score);
-    $("#score").html("Your Score : " + score);
 }
 
 /* =====================
@@ -168,10 +173,14 @@ function checkCollision() {
     var scrollPos = $(window).scrollLeft();
 
     for (let i = 0; i < enemies.length; i++) {
+
         if (
             parseInt(enemies[i].style.left) === scrollPos &&
-            !$("#hunter").hasClass("jump")
+            !$("#hunter").hasClass("jump") 
+
+
         ) {
+
             gameOver(score);
         }
     }
@@ -185,7 +194,6 @@ function gameOver(finalScore) {
     clearInterval(runTimer);
 
     $("#hunter").animate({ "margin-left": "-500px" });
-    $("#score").html("Your Score : " + finalScore);
     $("#over").fadeIn(2000);
     $("#go").fadeOut();
     $("#reload").fadeIn(2000);
@@ -196,6 +204,7 @@ function gameOver(finalScore) {
 ===================== */
 function jump() {
     $("#hunter").addClass("jump");
+
 }
 
 function stopJump() {
