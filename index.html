@@ -10,21 +10,23 @@
 
 <style>
     body {
-        margin: 0 auto;
+        margin: 0;
         background-image: url(forest.gif);
-        min-width: 100000000000000000000000000000000000000000000000000000000px; /* إجبار عرض Desktop */
+        min-width: 100000000000000000000000000000000000000000000000000000000px; 
         height: 100vh;
         overflow-x: hidden; 
         overflow-y: hidden;
         background-attachment: fixed;
         background-size: cover;
         background-position: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
     .hunter {
         position: fixed;
         left: 10px;
         top: 100px;
+        z-index: 1000;
     }
 
     .jump {
@@ -38,29 +40,69 @@
     }
 
     .score {
-        background: transparent;
-        color: #b6441b;
+        background: rgba(0,0,0,0.5);
+        color: gold;
         font-size: 30px;
-        border: none;
         font-weight: 700;
-        text-shadow: -2px -1px gold;
+        text-shadow: 1px 1px 5px black;
+        padding: 10px 20px;
+        border-radius: 15px;
+        border: none;
     }
 
     .go,
     .again {
-        width: 200px;
-        height: 40px;
+        width: 220px;
+        height: 50px;
         position: fixed;
         left: 50%;
         top: 550px;
-        margin-left: -100px;
-        border-radius: 40px;
+        margin-left: -110px;
+        border-radius: 25px;
         border: none;
         cursor: pointer;
         z-index: 10000;
-        background-color: rgba(0,0,0,.5);
-        backdrop-filter: blur(50px);
+        background-color: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(10px);
         color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .go:hover,
+    .again:hover {
+        background-color: rgba(255, 215, 0, 0.8);
+        color: black;
+        transform: scale(1.05);
+    }
+
+    #over {
+        position: fixed;
+        top: 120px;
+        left: 50%;
+        width: 550px;
+        height: 400px;
+        margin-left: -275px;
+        border-radius: 50px;
+        display: none;
+        box-shadow: 0 0 20px black;
+    }
+
+    #top-info {
+        text-align: center;
+        position: fixed;
+        left: 50%;
+        top: 10px;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        z-index: 1000;
+    }
+
+    #top-info img {
+        vertical-align: middle;
     }
 </style>
 </head>
@@ -68,11 +110,8 @@
 <body onload="startGame()">
 
 <!-- top info -->
-<div style="text-align:center; position:fixed; left:50%; margin-left:-500px; width:1000px">
-    <img src="./hunter.gif" width="50">
-    <img src="./lion.gif" width="40">
-    <br>
-    <button class="score" id="score"></button>
+<div id="top-info">
+    <button class="score" id="score">Your Score: 10</button>
 </div>
 
 <!-- hunter -->
@@ -81,14 +120,9 @@
 </div>
 
 <button class="go" id="go">Click Space To Jump</button>
+<button class="again" id="reload" onclick="reloadGame()" style="display:none;">Play Again</button>
 
-<button class="again" id="reload" onclick="reloadGame()" style="display:none;font-weight:700">
-    Play Again
-</button>
-
-<img src="./over.jpg"
-     id="over"
-     style="position:fixed;top:120px;left:50%;width:550px;height:400px;margin-left:-275px;border-radius:100px;display:none">
+<img src="./over.jpg" id="over">
 
 <script src="./query.js"></script>
 
@@ -135,10 +169,10 @@ function checkCollision() {
 
     for (let i = 0; i < enemies.length; i++) {
         if (
-            enemies[i].style.left === scrollPos + "px" &&
+            parseInt(enemies[i].style.left) === scrollPos &&
             !$("#hunter").hasClass("jump")
         ) {
-            gameOver(scrollPos);
+            gameOver(score);
         }
     }
 }
@@ -204,44 +238,45 @@ if (/Mobi|Android/i.test(navigator.userAgent)) {
     document.body.style.minWidth = "1000000000000000000000000000000000000px";
 }
 
+/* =====================
+   DISABLE RIGHT CLICK AND SHORTCUTS
+===================== */
+document.onkeydown = function (e) {
+    if (
+        e.ctrlKey &&
+        (
+            e.keyCode === 67 ||
+            e.keyCode === 86 ||
+            e.keyCode === 85 ||
+            e.keyCode === 117
+        )
+    ) {
+        return false;
+    } else {
+        return true;
+    }
+};
+
+$(document).keypress("u", function (e) {
+    if (e.ctrlKey) {
+        return false;
+    } else {
+        return true;
+    }
+});
+
+document.addEventListener("contextmenu", function (e) {
+    e.preventDefault();
+}, false);
+
+$(document).keydown(function (event) {
+    if (event.keyCode == 123) {
+        return false;
+    } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) {
+        return false;
+    }
+});
 </script>
-    <script>
-        document.onkeydown = function (e) {
-            if (
-                e.ctrlKey &&
-                (
-                    e.keyCode === 67 ||
-                    e.keyCode === 86 ||
-                    e.keyCode === 85 ||
-                    e.keyCode === 117
-                )
-            ) {
-                return false;
-            } else {
-                return true;
-            }
-        };
-
-        $(document).keypress("u", function (e) {
-            if (e.ctrlKey) {
-                return false;
-            } else {
-                return true;
-            }
-        });
-
-        document.addEventListener("contextmenu", function (e) {
-            e.preventDefault();
-        }, false);
-
-        $(document).keydown(function (event) {
-            if (event.keyCode == 123) {
-                return false;
-            } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) {
-                return false;
-            }
-        });
-    </script>
 
 </body>
 </html>
