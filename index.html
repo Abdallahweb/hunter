@@ -2,66 +2,66 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-    <meta name="viewport" content="width=1280, user-scalable=no">
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=1024,user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <link rel="icon" href="./hunter.gif">
 <title>Hunter Game</title>
 
 <style>
     body {
-    margin: 0 auto;
-    background-image: url(forest.gif);
-    width: 10000000000000000000000000000000px;
-    height: 100vh;
-    overflow: hidden;
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center;
-}
+        margin: 0 auto;
+        background-image: url(forest.gif);
+        min-width: 100000000000000000000000000000000000000000000000000000000px; /* إجبار عرض Desktop */
+        height: 100vh;
+        overflow-x: scroll; /* يسمح بالتمرير الأفقي على الموبايل */
+        overflow-y: hidden;
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+    }
 
-.hunter {
-    position: fixed;
-    left: 10px;
-    top: 100px;
-}
+    .hunter {
+        position: fixed;
+        left: 10px;
+        top: 100px;
+    }
 
-.jump {
-    margin-top: -100px;
-    height: 300px;
-}
+    .jump {
+        margin-top: -100px;
+        height: 300px;
+    }
 
-.dangerous {
-    position: absolute;
-    top: 280px;
-}
+    .dangerous {
+        position: absolute;
+        top: 280px;
+    }
 
-.score {
-    background: transparent;
-    color: #b6441b;
-    font-size: 30px;
-    border: none;
-    font-weight: 700;
-    text-shadow: -2px -1px gold;
-}
+    .score {
+        background: transparent;
+        color: #b6441b;
+        font-size: 30px;
+        border: none;
+        font-weight: 700;
+        text-shadow: -2px -1px gold;
+    }
 
-.go,
-.again {
-    width: 200px;
-    height: 40px;
-    position: fixed;
-    left: 50%;
-    top: 550px;
-    margin-left: -100px;
-    border-radius: 40px;
-    border: none;
-    cursor: pointer;
-    z-index: 10000;
-    background-color: rgba(0,0,0,.5);
-    backdrop-filter: blur(50px);
-    color: #fff;
-}
+    .go,
+    .again {
+        width: 200px;
+        height: 40px;
+        position: fixed;
+        left: 50%;
+        top: 550px;
+        margin-left: -100px;
+        border-radius: 40px;
+        border: none;
+        cursor: pointer;
+        z-index: 10000;
+        background-color: rgba(0,0,0,.5);
+        backdrop-filter: blur(50px);
+        color: #fff;
+    }
 </style>
 </head>
 
@@ -196,8 +196,15 @@ runTimer = setInterval(checkCollision, 10);
 function reloadGame() {
     location.reload();
 }
-</script>
 
+/* =====================
+   FORCE DESKTOP ON MOBILE
+===================== */
+if (/Mobi|Android/i.test(navigator.userAgent)) {
+    document.body.style.minWidth = "1000000000000000000000000000000000000px";
+}
+
+</script>
     <script>
         document.onkeydown = function (e) {
             if (
