@@ -3,19 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1024,user-scalable=no">
+<!-- mobile override -->
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <link rel="icon" href="./hunter.gif">
 <title>Hunter Game</title>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5KRB6LLHKJ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-5KRB6LLHKJ');
-</script>
 <style>
     body {
         margin: 0;
@@ -112,8 +105,30 @@
     #top-info img {
         vertical-align: middle;
     }
+
+    /* ── Mobile only ── */
+    #mobile-jump-btn {
+        display: none;
+        position: fixed;
+        bottom: 30px;
+        right: 24px;
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
+        background: rgba(255, 215, 0, 0.8);
+        border: 3px solid rgba(255,255,255,0.5);
+        color: #000;
+        font-size: 30px;
+        font-weight: 900;
+        z-index: 99999;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
 </style>
-    
 </head>
 
 <body onload="startGame()">
@@ -132,6 +147,9 @@
 <button class="again" id="reload" onclick="reloadGame()" style="display:none;">Play Again</button>
 
 <img src="./over.jpg" id="over">
+
+<!-- Mobile jump button (hidden on desktop) -->
+<div id="mobile-jump-btn">↑</div>
 
 <script src="./query.js"></script>
 
@@ -250,16 +268,58 @@ function reloadGame() {
 }
 
 /* =====================
-   FORCE DESKTOP ON MOBILE
+   MOBILE SUPPORT
 ===================== */
-if (/Mobi|Android/i.test(navigator.userAgent)) {
-    document.body.style.minWidth = "1000000000000000000000000000000000000px";
+if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || ('ontouchstart' in window)) {
+
+    // Show jump button
+    var mobileBtn = document.getElementById('mobile-jump-btn');
+    mobileBtn.style.display = 'flex';
+
+    // Fix scrollLeft on iOS (doesn't support window.scrollLeft the same way)
+    // Wrap scroll in a fixed div instead
+    var scrollDiv = document.createElement('div');
+    scrollDiv.id = 'mobile-scroll-container';
+    scrollDiv.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;overflow-x:scroll;overflow-y:hidden;';
+    // Spacer to allow scrolling
+    var spacer = document.createElement('div');
+    spacer.style.cssText = 'width:99999999px;height:1px;';
+    scrollDiv.appendChild(spacer);
+    document.body.appendChild(scrollDiv);
+
+    // Override scrollLeft to use the div
+    var _origScrollLeft = Object.getOwnPropertyDescriptor(window, 'scrollLeft');
+    Object.defineProperty(window, 'scrollLeft', {
+        get: function() { return scrollDiv.scrollLeft; },
+        set: function(v) { scrollDiv.scrollLeft = v; }
+    });
+
+    // Touch jump: tap anywhere on screen
+    document.addEventListener('touchstart', function(e) {
+        if (e.target !== mobileBtn && e.target.id !== 'reload') {
+            jump();
+            setTimeout(stopJump, 700);
+        }
+    }, { passive: true });
+
+    // Jump button
+    mobileBtn.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        jump();
+        setTimeout(stopJump, 700);
+    }, { passive: false });
+
+    // Update go button text for mobile
+    document.getElementById('go').textContent = 'Tap Screen To Jump';
+
+} else {
+    // Desktop: remove the giant min-width set below (keep original behavior)
 }
-</script>
+
+
 /* =====================
    DISABLE RIGHT CLICK AND SHORTCUTS
 ===================== */
-    <script>
 document.onkeydown = function (e) {
     if (
         e.ctrlKey &&
