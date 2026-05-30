@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1024,user-scalable=no">
-<!-- mobile override -->
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -134,7 +133,6 @@
 
 <body onload="startGame()">
 
-<!-- top info -->
 <div id="top-info">
     <button class="score" id="score">Your Score: 0</button>
 </div>
@@ -149,33 +147,20 @@
 
 <img src="./over.jpg" id="over">
 
-<!-- Mobile jump button (hidden on desktop) -->
 <div id="mobile-jump-btn">↑</div>
 
 <script src="./query.js"></script>
 
 <script>
-
-/* =====================
-   GAME VARIABLES
-===================== */
 var score = 10;
 var FinalScore = 0;
 var scrollTimer, runTimer;
-
-/* =====================
-   START GAME
-===================== */
 function startGame() {
     jump();
     stopJump();
     createEnemy();
 
 }
-
-/* =====================
-   CREATE ENEMY
-===================== */
 function createEnemy() {
     $("body").append('<img src="./lion.gif" class="dangerous">');
     var enemyPos = $(window).scrollLeft() + 3000;
@@ -185,25 +170,17 @@ if (FinalScore >= 0) {
 }
 }
 
-/* =====================
-   SCORE + SCROLL
-===================== */
 function updateScroll() {
     score += 10;
     $(window).scrollLeft(score);
 }
 
-/* =====================
-   COLLISION CHECK
-===================== */
 function checkCollision() {
     var enemies = document.getElementsByClassName("dangerous");
     var scrollPos = $(window).scrollLeft();
-    var hunterScreenX = 10; // hunter is fixed at left:10px
-
+    var hunterScreenX = 10;
     for (let i = 0; i < enemies.length; i++) {
         var enemyLeft = parseInt(enemies[i].style.left);
-        // position of enemy on screen = enemyLeft - scrollPos
         var enemyScreenX = enemyLeft - scrollPos;
 
         if (
@@ -216,9 +193,6 @@ function checkCollision() {
     }
 }
 
-/* =====================
-   GAME OVER
-===================== */
 function gameOver(finalScore) {
     clearInterval(scrollTimer);
     clearInterval(runTimer);
@@ -229,9 +203,6 @@ function gameOver(finalScore) {
     $("#reload").fadeIn(2000);
 }
 
-/* =====================
-   CONTROLS
-===================== */
 function jump() {
     $("#hunter").addClass("jump");
 
@@ -242,7 +213,6 @@ function stopJump() {
     setTimeout(createEnemy, 1000);
 }
 
-/* keyboard */
 window.onkeydown = function (e) {
     if (e.keyCode === 32) jump();
 };
@@ -256,48 +226,32 @@ window.onclick = function () {
     jump();
     setTimeout(stopJump, 1000);
 };
-
-/* =====================
-   START LOOPS
-===================== */
 scrollTimer = setInterval(updateScroll, 10);
 runTimer = setInterval(checkCollision, 10);
 
-/* =====================
-   RELOAD
-===================== */
 function reloadGame() {
     location.reload();
 }
 
-/* =====================
-   MOBILE SUPPORT
-===================== */
 if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || ('ontouchstart' in window)) {
 
-    // Show jump button
     var mobileBtn = document.getElementById('mobile-jump-btn');
     mobileBtn.style.display = 'flex';
 
-    // Fix scrollLeft on iOS (doesn't support window.scrollLeft the same way)
-    // Wrap scroll in a fixed div instead
     var scrollDiv = document.createElement('div');
     scrollDiv.id = 'mobile-scroll-container';
     scrollDiv.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;overflow-x:scroll;overflow-y:hidden;';
-    // Spacer to allow scrolling
     var spacer = document.createElement('div');
     spacer.style.cssText = 'width:99999999px;height:1px;';
     scrollDiv.appendChild(spacer);
     document.body.appendChild(scrollDiv);
 
-    // Override scrollLeft to use the div
     var _origScrollLeft = Object.getOwnPropertyDescriptor(window, 'scrollLeft');
     Object.defineProperty(window, 'scrollLeft', {
         get: function() { return scrollDiv.scrollLeft; },
         set: function(v) { scrollDiv.scrollLeft = v; }
     });
 
-    // Touch jump: tap anywhere on screen
     document.addEventListener('touchstart', function(e) {
         if (e.target !== mobileBtn && e.target.id !== 'reload') {
             jump();
@@ -305,23 +259,18 @@ if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || ('ontouchstart' in 
         }
     }, { passive: true });
 
-    // Jump button
     mobileBtn.addEventListener('touchstart', function(e) {
         e.preventDefault();
         jump();
         setTimeout(stopJump, 700);
     }, { passive: false });
 
-    // Update go button text for mobile
     document.getElementById('go').textContent = 'Tap Screen To Jump';
 
 } else {
-    // Desktop: remove the giant min-width set below (keep original behavior)
 }
 
-/* =====================
-   DISABLE RIGHT CLICK AND SHORTCUTS
-===================== */
+
 document.onkeydown = function (e) {
     if (
         e.ctrlKey &&
