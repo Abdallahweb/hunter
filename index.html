@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=1024,user-scalable=no">
 <!-- mobile override -->
+<script>
+if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)) {
+    document.querySelector('meta[name="viewport"]').content = "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+}
+</script>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <link rel="icon" href="./hunter.gif">
@@ -198,16 +203,18 @@ function updateScroll() {
 function checkCollision() {
     var enemies = document.getElementsByClassName("dangerous");
     var scrollPos = $(window).scrollLeft();
+    var hunterScreenX = 10; // hunter is fixed at left:10px
 
     for (let i = 0; i < enemies.length; i++) {
+        var enemyLeft = parseInt(enemies[i].style.left);
+        // position of enemy on screen = enemyLeft - scrollPos
+        var enemyScreenX = enemyLeft - scrollPos;
 
         if (
-            parseInt(enemies[i].style.left) === scrollPos &&
-            !$("#hunter").hasClass("jump") 
-
-
+            enemyScreenX >= hunterScreenX - 20 &&
+            enemyScreenX <= hunterScreenX + 60 &&
+            !$("#hunter").hasClass("jump")
         ) {
-
             gameOver(score);
         }
     }
@@ -315,7 +322,6 @@ if (/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) || ('ontouchstart' in 
 } else {
     // Desktop: remove the giant min-width set below (keep original behavior)
 }
-
 
 /* =====================
    DISABLE RIGHT CLICK AND SHORTCUTS
