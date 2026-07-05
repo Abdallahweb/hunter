@@ -71,7 +71,8 @@ function createEnemy() {
 const enamy = [
     "./tiger.gif",
     "./lion.gif",
-   
+       "./dinosaur.gif",
+
 
 ];
 
@@ -120,7 +121,7 @@ function gameOver(finalScore) {
     clearInterval(runTimer);
 
     $("#hunter").animate({ "margin-left": "-500px" });
-    $(".dangerous").animate({ "margin-left": "-600px" });
+    $(".dangerous").animate({ "margin-left": "-700px" });
     $("#over").fadeIn(2000);
     $("#go").fadeOut();
     $("#reload").fadeIn(2000);
