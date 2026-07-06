@@ -26,6 +26,9 @@ const images = [
     "./forest3.gif",
     "./forest4.gif",
     "./forest5.gif",
+        "./forest6.gif",
+            "./forest7.gif",
+
     "./forest.gif",
 
 
