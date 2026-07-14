@@ -73,7 +73,7 @@ $(".dangerous").last().css({ left: enemyPos });
 if (FinalScore >= 0) {
 $("#score").html("Your Score : " + FinalScore++);
 }
-}, 2000);
+}, 2500);
 
 
 }
