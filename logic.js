@@ -30,7 +30,6 @@ const images = [
 "./forest7.gif",
 "./forest8.gif",
 "./forest9.gif",
-
 "./forest.gif",
 
 
@@ -59,14 +58,7 @@ const enamy = [
 '<img src="./tiger.gif" style="height:300px" class="dangerous">',
 '<img src="./lion2.gif" style="height:350px" class="dangerous">',
 '<img src="./lion.gif" class="dangerous">',
-
 '<img src="./dinosaur.gif" class="dangerous">',
-
-
-
-
-
-
 ];
 
 let indexenamy = 1;
@@ -81,7 +73,7 @@ $(".dangerous").last().css({ left: enemyPos });
 if (FinalScore >= 0) {
 $("#score").html("Your Score : " + FinalScore++);
 }
-}, 4000);
+}, 2000);
 
 
 }
